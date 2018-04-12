@@ -31,12 +31,13 @@ func main() {
 }
 
 func init() {
-	logrus.SetLevel(logrus.DebugLevel)
-
 	viper.SetConfigName(".config")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath(".")
 	if err := viper.ReadInConfig(); err != nil {
 		logrus.Errorf("An error occured while reading the configuration: %#v", err)
 	}
+	logLevel := viper.Get("log_level").(int)
+	l := logrus.Level(logLevel)
+	logrus.SetLevel(l)
 }
